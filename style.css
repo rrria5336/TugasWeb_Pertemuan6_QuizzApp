@@ -1,0 +1,247 @@
+/* ============================================
+   1. VARIABEL TEMA (Hitam Biru - Deep Ocean)
+   ============================================ */
+:root {
+    --bg-color: #050a1f;
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    --primary-grad: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    --primary-glow: rgba(0, 114, 255, 0.6);
+    --option-bg: rgba(255, 255, 255, 0.03);
+    --option-border: rgba(255, 255, 255, 0.1);
+    --option-hover: rgba(0, 114, 255, 0.2);
+    --progress-bg: rgba(255, 255, 255, 0.1);
+    --highscore-bg: rgba(255, 215, 0, 0.1);
+    --highscore-border: rgba(255, 215, 0, 0.3);
+    --highscore-text: #ffd700;
+    --blob-1: #0072ff; --blob-2: #00c6ff; --blob-3: #00d2ff;
+}
+
+body.light-mode {
+    --bg-color: #f0f4f8;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --card-border: rgba(0, 0, 0, 0.05);
+    --card-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.08);
+    --primary-glow: rgba(0, 114, 255, 0.3);
+    --option-bg: rgba(0, 0, 0, 0.02);
+    --option-border: rgba(0, 0, 0, 0.08);
+    --option-hover: rgba(0, 114, 255, 0.1);
+    --progress-bg: rgba(0, 0, 0, 0.05);
+    --highscore-bg: rgba(255, 215, 0, 0.15);
+    --highscore-border: rgba(255, 215, 0, 0.4);
+    --highscore-text: #d97706;
+    --blob-1: #a1c4fd; --blob-2: #c2e9fb; --blob-3: #e0c3fc;
+}
+
+/* ============================================
+   2. RESET & BACKGROUND (BISA DI-SCROLL!)
+   ============================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto; /* INI YANG BIKIN BISA SCROLL! */
+    -webkit-overflow-scrolling: touch; /* Scroll mulus di iPhone */
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Ganti dari 'center' agar bisa scroll ke atas */
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    transition: background-color 0.5s ease, color 0.5s ease;
+    position: relative;
+    padding: 40px 20px; /* Padding atas-bawah biar ada ruang scroll */
+}
+
+/* Background Animasi */
+.bg-shapes { 
+    position: fixed; /* Fixed biar tetap di tempat saat scroll */
+    top: 0; left: 0; width: 100%; height: 100%; 
+    z-index: -1; overflow: hidden; 
+    pointer-events: none;
+}
+.shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; animation: floatBlob 15s infinite alternate ease-in-out; }
+.shape-1 { width: 300px; height: 300px; background: var(--blob-1); top: -50px; left: -50px; }
+.shape-2 { width: 400px; height: 400px; background: var(--blob-2); bottom: -100px; right: -100px; animation-delay: -5s; }
+.shape-3 { width: 250px; height: 250px; background: var(--blob-3); top: 40%; left: 50%; animation-delay: -10s; }
+@keyframes floatBlob { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 50px) scale(1.1); } }
+
+/* ============================================
+   3. CONTAINER & KARTU
+   ============================================ */
+.container { 
+    width: 100%; 
+    max-width: 500px; 
+    z-index: 1;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    /* Tidak ada max-height, biar card bisa memanjang */
+}
+
+.icon-large { font-size: 3rem; margin-bottom: 10px; animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+/* ============================================
+   4. LAYAR & ANIMASI
+   ============================================ */
+.screen { display: none; animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.screen.active { display: block; }
+.hidden { display: none !important; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* ============================================
+   5. TEKS & TOMBOL
+   ============================================ */
+.title { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1px; }
+.subtitle { font-size: 1rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; }
+
+.btn { 
+    padding: 14px 32px; 
+    font-size: 1rem; 
+    font-weight: 600; 
+    border: none; 
+    border-radius: 50px; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    letter-spacing: 0.5px; 
+    -webkit-tap-highlight-color: transparent; /* Hilangkan highlight biru di HP */
+}
+.primary-btn { background: var(--primary-grad); color: white; box-shadow: 0 4px 15px var(--primary-glow); }
+.primary-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px var(--primary-glow); }
+.primary-btn:active { transform: translateY(-1px); }
+
+.secondary-btn { background: transparent; color: var(--text-main); border: 2px solid var(--option-border); box-shadow: none; }
+.secondary-btn:hover { background: var(--option-hover); border-color: #00c6ff; transform: translateY(-3px); }
+
+.button-group { display: flex; gap: 12px; margin-top: 25px; flex-wrap: wrap; justify-content: center; }
+.button-group .btn { flex: 1; min-width: 140px; margin-top: 0; }
+
+.theme-btn { 
+    position: fixed; 
+    top: 20px; right: 20px; 
+    background: var(--card-bg); 
+    border: 1px solid var(--card-border); 
+    color: var(--text-main); 
+    width: 45px; height: 45px; 
+    border-radius: 50%; 
+    cursor: pointer; 
+    font-size: 1.2rem; 
+    display: flex; align-items: center; justify-content: center; 
+    transition: all 0.3s ease; 
+    z-index: 100; 
+    backdrop-filter: blur(10px); 
+    -webkit-tap-highlight-color: transparent;
+}
+.theme-btn:hover { transform: scale(1.1) rotate(15deg); }
+
+/* ============================================
+   6. PROGRESS, INFO, SOAL & PILIHAN
+   ============================================ */
+.progress-container { width: 100%; height: 8px; background: var(--progress-bg); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+.progress-bar { height: 100%; width: 0%; background: var(--primary-grad); border-radius: 10px; transition: width 0.5s ease; box-shadow: 0 0 10px var(--primary-glow); }
+
+.quiz-info { display: flex; justify-content: space-between; margin-bottom: 25px; }
+.badge { background: var(--option-bg); padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; color: var(--text-muted); font-weight: 600; border: 1px solid var(--option-border); }
+.timer.warning { color: #ff6b6b; border-color: rgba(255, 107, 107, 0.3); animation: pulseText 0.5s infinite; }
+@keyframes pulseText { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+.question-box { font-size: 1.2rem; font-weight: 600; margin-bottom: 25px; padding: 25px 20px; background: var(--option-bg); border-radius: 16px; border-left: 4px solid #0072ff; line-height: 1.5; text-align: left; }
+.options-box { display: flex; flex-direction: column; gap: 12px; }
+.option-btn { 
+    padding: 16px 20px; 
+    font-size: 1rem; 
+    border: 2px solid var(--option-border); 
+    border-radius: 12px; 
+    background: var(--option-bg); 
+    color: var(--text-main); 
+    cursor: pointer; 
+    text-align: left; 
+    transition: all 0.3s ease; 
+    font-weight: 500; 
+    width: 100%; 
+    -webkit-tap-highlight-color: transparent;
+}
+.option-btn:hover:not(.disabled) { border-color: #00c6ff; transform: translateX(5px); background: var(--option-hover); }
+
+.option-btn.correct { background: rgba(45, 106, 79, 0.9) !important; border-color: #40916c !important; color: white !important; animation: pop 0.4s ease; }
+.option-btn.wrong { background: rgba(155, 34, 38, 0.9) !important; border-color: #ae2012 !important; color: white !important; animation: shake 0.4s ease; }
+.option-btn.disabled { pointer-events: none; opacity: 0.7; cursor: default; }
+@keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+/* ============================================
+   7. HASIL & RIWAYAT
+   ============================================ */
+.score-circle { width: 140px; height: 140px; border-radius: 50%; background: var(--primary-grad); display: flex; justify-content: center; align-items: center; margin: 20px auto; font-size: 2.5rem; font-weight: 800; color: white; box-shadow: 0 0 30px var(--primary-glow); animation: popIn 0.6s ease; border: 4px solid rgba(255,255,255,0.2); }
+@keyframes popIn { from { transform: scale(0) rotate(-180deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
+
+.message { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 20px; min-height: 24px; }
+.high-score-box { display: flex; justify-content: space-between; align-items: center; background: var(--highscore-bg); padding: 14px 20px; border-radius: 12px; margin: 20px 0; font-weight: 600; color: var(--highscore-text); border: 1px solid var(--highscore-border); }
+.score-text { font-size: 1.2rem; font-weight: 800; }
+
+.history-section { margin-top: 25px; text-align: left; }
+.history-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; text-align: center; }
+
+/* Riwayat dengan scroll internal */
+.history-list { 
+    max-height: 200px; 
+    overflow-y: auto; 
+    background: rgba(0,0,0,0.2); 
+    border-radius: 12px; 
+    padding: 10px; 
+    border: 1px solid var(--card-border);
+    -webkit-overflow-scrolling: touch;
+}
+body.light-mode .history-list { background: rgba(255,255,255,0.5); }
+
+/* Custom Scrollbar */
+.history-list::-webkit-scrollbar { width: 6px; }
+.history-list::-webkit-scrollbar-track { background: transparent; }
+.history-list::-webkit-scrollbar-thumb { background: var(--primary-grad); border-radius: 10px; }
+
+.history-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--option-bg); border-radius: 8px; margin-bottom: 8px; font-size: 0.9rem; border: 1px solid var(--option-border); animation: slideIn 0.3s ease; }
+.history-item:last-child { margin-bottom: 0; }
+.history-item .attempt-num { color: var(--text-muted); font-weight: 500; }
+.history-item .attempt-score { font-weight: 700; color: var(--highscore-text); }
+@keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+/* ============================================
+   8. RESPONSIVE (HP & Tablet)
+   ============================================ */
+@media (max-width: 480px) {
+    body { padding: 20px 15px; }
+    .card { padding: 30px 20px; }
+    .title { font-size: 1.8rem; }
+    .question-box { font-size: 1rem; padding: 20px 15px; }
+    .option-btn { padding: 14px 16px; font-size: 0.95rem; }
+    .score-circle { width: 120px; height: 120px; font-size: 2rem; }
+    .button-group .btn { min-width: 100%; }
+    .btn { width: 100%; }
+    .theme-btn { top: 10px; right: 10px; width: 40px; height: 40px; font-size: 1rem; }
+}
+
+@media (max-width: 360px) {
+    .card { padding: 25px 15px; }
+    .title { font-size: 1.6rem; }
+    .btn { padding: 12px 24px; font-size: 0.95rem; }
+}

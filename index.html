@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Interactive Quiz App</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Link ke CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background Animasi -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Tombol Ganti Tema -->
+    <button id="theme-toggle" class="theme-btn">🌙</button>
+
+    <div class="container">
+        <!-- 1. HALAMAN MULAI -->
+        <div id="start-screen" class="screen active">
+            <div class="card">
+                <div class="icon-large">🎯</div>
+                <h1 class="title">Quiz Time!</h1>
+                <p class="subtitle">Jawab 5 pertanyaan seru dan raih skor tertinggi!</p>
+                <div class="high-score-box">
+                    <span>🏆 High Score:</span>
+                    <span id="high-score-display" class="score-text">0</span>
+                </div>
+                <button id="start-btn" class="btn primary-btn">Mulai Kuis </button>
+            </div>
+        </div>
+
+        <!-- 2. HALAMAN KUIS -->
+        <div id="quiz-screen" class="screen">
+            <div class="card">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <div class="quiz-info">
+                    <span id="question-counter" class="badge">Soal 1/5</span>
+                    <span id="timer" class="badge timer">⏱️ 15s</span>
+                </div>
+                
+                <div id="question-container" class="question-box"></div>
+                <div id="options-container" class="options-box"></div>
+                
+                <button id="next-btn" class="btn primary-btn hidden">Soal Berikutnya ➡️</button>
+            </div>
+        </div>
+
+        <!-- 3. HALAMAN HASIL -->
+        <div id="result-screen" class="screen">
+            <div class="card">
+                <div class="icon-large">🎉</div>
+                <h1 class="title">Selesai!</h1>
+                <div class="score-circle">
+                    <span id="score-display">0/5</span>
+                </div>
+                <p id="message" class="message"></p>
+                
+                <div class="high-score-box">
+                    <span>🏆 High Score:</span>
+                    <span id="high-score-result" class="score-text">0</span>
+                </div>
+
+                <!-- RIWAYAT PENGERJAAN -->
+                <div class="history-section">
+                    <h3 class="history-title">📜 Riwayat Pengerjaan</h3>
+                    <div id="history-container" class="history-list">
+                        <!-- Riwayat akan muncul di sini via JS -->
+                    </div>
+                </div>
+
+                <!-- DUA TOMBOL AKSI -->
+                <div class="button-group">
+                    <button id="restart-btn" class="btn primary-btn">Main Lagi 🔄</button>
+                    <button id="menu-btn" class="btn secondary-btn">Ke Menu 🏠</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link ke JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
